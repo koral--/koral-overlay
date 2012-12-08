@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit kde4-base
+inherit kde4-base git-2
 
 DESCRIPTION="Oxygen style and decoration with support for transparency"
 HOMEPAGE="https://projects.kde.org/projects/playground/artwork/oxygen-transparent"
