@@ -13,7 +13,9 @@ LICENSE="as-is"
 KEYWORDS=""
 SLOT="0"
 IUSE="debug"
-
+KDE_SCM="git"
+EGIT_BRANCH="stable"
+EGIT_REPONAME="oxygen-transparent"
 RDEPEND="
 x11-libs/libX11
 "
