@@ -8,9 +8,14 @@ EAPI=5
 
 inherit eutils
 
+SR="M7"
+SRC_BASE="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/kepler/${SR}/eclipse-java-kepler-${SR}-linux-gtk"
+
 DESCRIPTION="Eclipse SDK"
 HOMEPAGE="http://www.eclipse.org"
-SRC_URI="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/kepler/M7/eclipse-java-kepler-M7-linux-gtk-x86_64.tar.gz"
+SRC_URI="
+	amd64? ( ${SRC_BASE}-x86_64.tar.gz&r=1 -> eclipse-java-kepler-${SR}-linux-gtk-x86_64-${PV}.tar.gz )
+	x86? ( ${SRC_BASE}.tar.gz&r=1 -> eclipse-java-kepler-${SR}-linux-gtk-${PV}.tar.gz )"
 
 LICENSE="EPL-1.0"
 SLOT="4.3"
