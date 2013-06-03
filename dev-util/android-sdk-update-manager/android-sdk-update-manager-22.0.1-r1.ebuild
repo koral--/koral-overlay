@@ -1,6 +1,6 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/android-sdk-update-manager/android-sdk-update-manager-21.1.ebuild,v 1.1 2013/03/03 21:41:23 rich0 Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-util/android-sdk-update-manager/android-sdk-update-manager-22.0.1.ebuild,v 1.1 2013/06/01 12:43:15 rich0 Exp $
 
 EAPI="3"
 
@@ -16,17 +16,17 @@ RESTRICT="mirror"
 
 LICENSE="android"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 
 DEPEND="app-arch/tar
 		app-arch/gzip"
 RDEPEND=">=virtual/jdk-1.5
 	>=dev-java/ant-core-1.6.5
+	>=dev-java/swt-3.5[cairo]
 	amd64? ( app-emulation/emul-linux-x86-gtklibs )
 	x86? ( x11-libs/gtk+:2 )"
 
 ANDROID_SDK_DIR="/opt/${PN}"
-
 QA_FLAGS_IGNORED_x86="
 	${ANDROID_SDK_DIR/\/}/tools/emulator
 	${ANDROID_SDK_DIR/\/}/tools/adb
@@ -46,24 +46,39 @@ pkg_setup() {
 	enewgroup android
 }
 
-src_prepare(){
-	rm -rf tools/lib/x86*
-}
+#src_prepare(){
+#	rm -rf tools/lib/x86*
+#}
 
 src_install(){
+	dodoc tools/NOTICE.txt "SDK Readme.txt" || die
+	rm -f tools/NOTICE.txt "SDK Readme.txt"
 
 	dodir "${ANDROID_SDK_DIR}/tools"
 	cp -pPR tools/* "${ED}${ANDROID_SDK_DIR}/tools" || die "failed to install tools"
 
 	# Maybe this is needed for the tools directory too.
-	dodir "${ANDROID_SDK_DIR}"/{add-ons,docs,platforms,temp} || die "failed to dodir"
+	dodir "${ANDROID_SDK_DIR}"/{add-ons,build-tools,docs,extras,platforms,platform-tools,samples,sources,system-images,temp} || die "failed to dodir"
 
-	fowners root:android "${ANDROID_SDK_DIR}"/{,add-ons,docs,platforms,temp,tools} || die
-	fperms 0775 "${ANDROID_SDK_DIR}"/{,add-ons,docs,platforms,temp,tools} || die
+	fowners root:android "${ANDROID_SDK_DIR}"/{add-ons,build-tools,docs,extras,platforms,platform-tools,samples,sources,system-images,temp,tools} || die
+	fperms 0775 "${ANDROID_SDK_DIR}"/{add-ons,build-tools,docs,extras,platforms,platform-tools,samples,sources,system-images,temp,tools} || die
 
 	echo "PATH=\"${EPREFIX}${ANDROID_SDK_DIR}/tools:${EPREFIX}${ANDROID_SDK_DIR}/platform-tools\"" > "${T}/80${PN}" || die
 
-	echo "ANDROID_SWT=\"${ANDROID_SDK_DIR}/tools/lib/x86_64\"" >> "${T}/80${PN}" || die
+	SWT_PATH=
+	SWT_VERSIONS="4.2 3.7 3.6 3.5"
+	for version in $SWT_VERSIONS; do
+		# redirecting stderr to /dev/null
+		# not sure if this is best, but avoids misleading error messages
+		SWT_PATH="`dirname \`java-config -p swt-\$version 2>/dev/null\` 2>/dev/null`"
+		if [ $SWT_PATH ]; then
+			einfo "SWT_PATH=$SWT_PATH selecting version $version of SWT."
+			break
+		fi
+	done
+
+	#echo "ANDROID_SWT=\"${SWT_PATH}\"" >> "${T}/80${PN}" || die
+	echo "ANDROID_SWT=\"${ANDROID_SDK_DIR}/tools/lib/x86_64\"" >> "${T}/80${PN}" || die 
 
 	doenvd "${T}/80${PN}" || die
 
