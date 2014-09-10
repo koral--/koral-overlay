@@ -12,7 +12,7 @@ DOWNLOAD_URL="http://www.oracle.com/technetwork/java/javase/documentation/jdk8-d
 	|| MY_PV_EXT="u$(get_version_component_range 4)"
 
 MY_PV="$(get_version_component_range 2)${MY_PV_EXT}"
-ORIG_NAME="jdk-${MY_PV}-apidocs.zip"
+ORIG_NAME="jdk-${MY_PV}-docs-all.zip"
 
 DESCRIPTION="Oracle's documentation bundle (including API) for Java SE"
 HOMEPAGE="http://download.oracle.com/javase/8/docs/"
