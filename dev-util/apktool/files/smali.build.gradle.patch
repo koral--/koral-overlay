@@ -1,0 +1,18 @@
+--- brut.apktool.smali/build.gradle.orig	2015-03-03 17:24:37.009699175 +0100
++++ brut.apktool.smali/build.gradle	2015-03-03 17:24:52.961379236 +0100
+@@ -82,7 +82,7 @@
+                    stringtemplate: 'org.antlr:stringtemplate:3.2.1',
+                    commons_cli: 'commons-cli:commons-cli:1.2',
+                    jflex: 'de.jflex:jflex:1.4.3',
+-                   proguard: 'net.sf.proguard:proguard-base:4.8'
++                   proguard: 'net.sf.proguard:proguard-base:5.2'
+          ]
+     }
+ 
+@@ -111,4 +111,4 @@
+ 
+ task wrapper(type: Wrapper) {
+     gradleVersion = '1.8'
+-}
+\ Brak znaku nowej linii na końcu pliku
++}
