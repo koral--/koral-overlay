@@ -66,7 +66,7 @@ src_install(){
 
 	echo "PATH=\"${EPREFIX}${ANDROID_SDK_DIR}/tools:${EPREFIX}${ANDROID_SDK_DIR}/platform-tools\"" > "${T}/80${PN}" || die
 
-	SWT_PATH=
+	SWT_PATH="${EPREFIX}${ANDROID_SDK_DIR}"
 	SWT_VERSIONS="3.8"
 	for version in $SWT_VERSIONS; do
 		# redirecting stderr to /dev/null
