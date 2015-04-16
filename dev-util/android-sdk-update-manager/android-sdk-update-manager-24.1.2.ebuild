@@ -11,7 +11,7 @@ MY_P="android-sdk_r${PV}-linux"
 DESCRIPTION="Open Handset Alliance's Android SDK"
 HOMEPAGE="http://developer.android.com"
 SRC_URI="http://dl.google.com/android/${MY_P}.tgz"
-IUSE=""
+IUSE="+X"
 RESTRICT="mirror"
 
 LICENSE="android"
@@ -22,12 +22,9 @@ DEPEND="app-arch/tar
 		app-arch/gzip"
 RDEPEND=">=virtual/jdk-1.5
 	>=dev-java/ant-core-1.6.5
-	|| ( dev-java/swt:3.8[cairo] )
-	|| (
-		(
-			>=x11-libs/gtk+-2.24.23-r2:2
-		)
-	)
+	X? ( || ( dev-java/swt:3.8[cairo] )
+	     || ( >=x11-libs/gtk+-2.24.23-r2:2 )
+	   )
 "
 
 ANDROID_SDK_DIR="/opt/${PN}"
