@@ -56,6 +56,8 @@ src_install(){
 	rm -f tools/NOTICE.txt "SDK Readme.txt"
 
 	dodir "${ANDROID_SDK_DIR}/tools"
+	dodir "${ANDROID_SDK_DIR}/tools/lib/x86_64"
+
 	cp -pPR tools/* "${ED}${ANDROID_SDK_DIR}/tools" || die "failed to install tools"
 
 	# Maybe this is needed for the tools directory too.
@@ -77,11 +79,9 @@ src_install(){
 			break
 		fi
 	done
-	if [ -z "$SWT_PATH" ]; then
-		SWT_PATH="${EPREFIX}${ANDROID_SDK_DIR}"
+	if [[ ! -z "$SWT_PATH" ]]; then
+		echo "ANDROID_SWT=\"${SWT_PATH}\"" >> "${T}/80${PN}" || die
 	fi
-
-	echo "ANDROID_SWT=\"${SWT_PATH}\"" >> "${T}/80${PN}" || die
 	echo "ANDROID_HOME=\"${EPREFIX}${ANDROID_SDK_DIR}\"" >> "${T}/80${PN}" || die
 
 	doenvd "${T}/80${PN}"
