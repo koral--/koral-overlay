@@ -49,11 +49,10 @@ pkg_setup() {
 
 src_prepare(){
 	rm -rf tools/lib/x86*
+	
 }
 
 src_install(){
-	dodoc tools/NOTICE.txt "SDK Readme.txt"
-	rm -f tools/NOTICE.txt "SDK Readme.txt"
 
 	dodir "${ANDROID_SDK_DIR}/tools"
 	dodir "${ANDROID_SDK_DIR}/tools/lib/x86_64"
