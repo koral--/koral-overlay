@@ -16,7 +16,7 @@ RESTRICT="mirror"
 
 LICENSE="android"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 
 DEPEND="app-arch/tar
 		app-arch/gzip"
@@ -49,7 +49,28 @@ pkg_setup() {
 
 src_prepare(){
 	rm -rf tools/lib/x86*
-	
+	rm tools/lib/*.so
+	rm -rf tools/lib/monitor-x86
+	rm tools/emulator
+	rm tools/emulator-x86
+	rm tools/emulator-arm
+	rm tools/emulator-mips
+	if ! use X; then
+		rm tools/draw9patch
+		rm tools/ddms
+		rm tools/monitor
+		rm tools/uiautomatorviewer
+		rm tools/hierarchyviewer
+		rm tools/lib/ddms.jar
+                rm tools/lib/draw9patch.jar
+                rm tools/lib/hierarchyviewer2.jar
+                rm tools/lib/hierarchyviewer2lib.jar
+		rm -rf tools/lib/monitor-x86_64
+		rm tools/lib/ddmlib.jar
+                rm tools/lib/ddmuilib.jar
+		rm tools/hierarchyviewer2.jar
+                rm tools/hierarchyviewer2lib.jar
+	fi
 }
 
 src_install(){
