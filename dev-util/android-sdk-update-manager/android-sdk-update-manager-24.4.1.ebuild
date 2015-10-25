@@ -12,7 +12,7 @@ DESCRIPTION="Open Handset Alliance's Android SDK"
 HOMEPAGE="http://developer.android.com"
 SRC_URI="http://dl.google.com/android/${MY_P}.tgz"
 IUSE="+X"
-RESTRICT="mirror"
+RESTRICT="mirror sandbox"
 
 LICENSE="android"
 SLOT="0"
@@ -51,10 +51,13 @@ src_prepare(){
 	rm -rf tools/lib/x86*
 	rm tools/lib/*.so
 	rm -rf tools/lib/monitor-x86
-	rm tools/emulator
-	rm tools/emulator-x86
-	rm tools/emulator-arm
-	rm tools/emulator-mips
+       rm tools/emulator
+       rm tools/emulator-x86
+       rm tools/emulator-arm
+       rm tools/emulator-mips
+        rm -rf tools/qemu/linux-x86
+        rm -rf tools/bin
+
 	if ! use X; then
 		rm tools/draw9patch
 		rm tools/ddms
@@ -80,11 +83,20 @@ src_install(){
 
 	cp -pPR tools/* "${ED}${ANDROID_SDK_DIR}/tools" || die "failed to install tools"
 
-	# Maybe this is needed for the tools directory too.
 	dodir "${ANDROID_SDK_DIR}"/{add-ons,build-tools,docs,extras,platforms,platform-tools,samples,sources,system-images,temp}
-
 	fowners root:android "${ANDROID_SDK_DIR}"/{.,add-ons,build-tools,docs,extras,platforms,platform-tools,samples,sources,system-images,temp,tools}
+	fowners root:android "${ANDROID_SDK_DIR}"/tools/mksdcard
+	fowners root:android "${ANDROID_SDK_DIR}"/tools/emulator64-x86
+	fowners root:android "${ANDROID_SDK_DIR}"/tools/android
+	fowners root:android "${ANDROID_SDK_DIR}"/tools/lint
+	fowners root:android "${ANDROID_SDK_DIR}"/tools/emulator64-arm
 	fperms 0775 "${ANDROID_SDK_DIR}"/{.,add-ons,build-tools,docs,extras,platforms,platform-tools,samples,sources,system-images,temp,tools}
+        fperms 0755 "${ANDROID_SDK_DIR}"/{.,add-ons,build-tools,docs,extras,platforms,platform-tools,samples,sources,system-images,temp,tools}
+        fperms 0755 "${ANDROID_SDK_DIR}"/tools/mksdcard
+        fperms 0755 "${ANDROID_SDK_DIR}"/tools/emulator64-x86
+        fperms 0755 "${ANDROID_SDK_DIR}"/tools/android
+        fperms 0755 "${ANDROID_SDK_DIR}"/tools/lint
+        fperms 0755 "${ANDROID_SDK_DIR}"/tools/emulator64-arm
 
 	echo "PATH=\"${EPREFIX}${ANDROID_SDK_DIR}/tools:${EPREFIX}${ANDROID_SDK_DIR}/platform-tools\"" > "${T}/80${PN}" || die
 
@@ -112,6 +124,7 @@ src_install(){
 
 	udev_dorules "${FILESDIR}"/80-android.rules || die
 	domenu "${FILESDIR}"/android-sdk-update-manager.desktop
+
 }
 
 pkg_postinst() {
