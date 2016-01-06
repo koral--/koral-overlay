@@ -7,7 +7,7 @@ EAPI="5"
 inherit java-pkg-2
 
 MY_PN=${PN%%-bin}
-MY_P="${MY_PN}-${PV/_rc/-rc-}"
+MY_P="${MY_PN}-${PV}"
 
 DESCRIPTION="A project automation and build tool with a Groovy based DSL"
 SRC_URI="http://services.gradle.org/distributions/${MY_P}-all.zip"
