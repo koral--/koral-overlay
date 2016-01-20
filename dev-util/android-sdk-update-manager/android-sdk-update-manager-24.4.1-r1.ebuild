@@ -51,6 +51,7 @@ src_prepare(){
 	rm -rf tools/lib/x86*
 	rm tools/lib/*.so
 	rm -rf tools/lib/monitor-x86
+	rm -rf tools/lib/gles_mesa
        rm tools/emulator
        rm tools/emulator-x86
        rm tools/emulator-arm
