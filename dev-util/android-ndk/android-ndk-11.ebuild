@@ -12,9 +12,10 @@ LICENSE="android"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
-RESTRICT="mirror strip installsources test"
+RESTRICT="strip installsources test"
 
 RDEPEND="
+	sys-libs/ncurses[tinfo]
         >=dev-util/android-sdk-update-manager-10
         >=sys-devel/make-3.81
 "
