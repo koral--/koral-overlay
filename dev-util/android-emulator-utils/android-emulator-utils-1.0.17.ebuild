@@ -16,13 +16,13 @@ DEPEND="|| ( dev-java/gradle-bin dev-java/gradle )"
 
 S="${WORKDIR}/android-gradle-jenkins-plugin-${PV}"
 
-RESTRICT="test"
+RESTRICT="test mirror"
 
 src_unpack() {
     unpack ${A}
     cd "${S}"
 }
-src_compile() { gradle build :emulatorSetuper:jar :emulatorCleaner:jar ; }
+src_compile() { gradle build :emulatorSetuper:jar :emulatorCleaner:jar -x test  ; }
 
 src_install() {
 	java-pkg_newjar "emulatorSetuper/build/libs/emulatorSetuper.jar" emulatorSetuper.jar
