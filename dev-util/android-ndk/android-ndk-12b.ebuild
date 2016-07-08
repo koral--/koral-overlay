@@ -15,7 +15,7 @@ IUSE=""
 RESTRICT="strip installsources test"
 
 RDEPEND="
-	sys-libs/ncurses
+	sys-libs/ncurses[tinfo]
         >=dev-util/android-sdk-update-manager-10
         >=sys-devel/make-3.81
 "
