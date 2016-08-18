@@ -12,7 +12,6 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND=">=virtual/jdk-1.8"
-DEPEND="|| ( dev-java/gradle-bin dev-java/gradle )"
 
 S="${WORKDIR}/android-gradle-jenkins-plugin-${PV}"
 
