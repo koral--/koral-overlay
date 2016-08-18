@@ -22,7 +22,7 @@ src_unpack() {
     unpack ${A}
     cd "${S}"
 }
-src_compile() { gradle build :emulatorSetuper:jar :emulatorCleaner:jar -x test  ; }
+src_compile() { sh ./gradlew build :emulatorSetuper:jar :emulatorCleaner:jar -x test  ; }
 
 src_install() {
 	java-pkg_newjar "emulatorSetuper/build/libs/emulatorSetuper.jar" emulatorSetuper.jar
