@@ -16,6 +16,7 @@ RESTRICT="strip installsources test"
 
 RDEPEND="
 	sys-libs/ncurses:5/5[tinfo]
+	dev-db/sqlite:3
         >=dev-util/android-sdk-update-manager-10
         >=sys-devel/make-3.81
 "
