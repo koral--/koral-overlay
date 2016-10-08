@@ -2,34 +2,34 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-util/android-ndk/android-ndk-10b.ebuild,v 1.1 2014/09/17 10:08:02 jauhien Exp $
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Open Handset Alliance's Android NDK (Native Dev Kit)"
 HOMEPAGE="http://developer.android.com/sdk/ndk/"
-SRC_URI="
-                amd64? (
-                        http://dl.google.com/android/ndk/${PN}-r${PV}-linux-x86_64.bin -> ${P}-x86_64.7z
-                )
-"
+SRC_URI="http://dl.google.com/android/repository/${PN}-r${PV}-linux-x86_64.zip"
 
 LICENSE="android"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
-#IUSE="+target-32 target-64"
-RESTRICT="mirror strip installsources test"
+RESTRICT="strip installsources test"
 
-DEPEND="app-arch/p7zip"
 RDEPEND="
+	sys-libs/ncurses:5/5[tinfo]
         >=dev-util/android-sdk-update-manager-10
         >=sys-devel/make-3.81
 "
 
-S="${WORKDIR}/${PN}-r${PV}"
+#S="${WORKDIR}/${PN}-r${PV}-linux-x86_64.tar.bz2"
 
 ANDROID_NDK_DIR="opt/${PN}"
 
 QA_PREBUILT="*"
+
+src_unpack() {
+	unpack ${A}
+	mv ${WORKDIR}/${PN}-r${PV}-linux-x86_64.tar.bz2 ${S}
+}
 
 src_configure() {
         :
@@ -39,13 +39,14 @@ src_compile() {
         :
 }
 
+S="${WORKDIR}/${PN}-r${PV}/"
 src_install() {
         dodir "/${ANDROID_NDK_DIR}"
         cp -pPR * "${ED}/${ANDROID_NDK_DIR}" || die
 
         fowners -R root:android "/${ANDROID_NDK_DIR}"
-        fperms 0775 "/${ANDROID_NDK_DIR}/"{,build,docs,platforms,samples}
-        fperms 0775 "/${ANDROID_NDK_DIR}/"{sources,tests,toolchains}
+        fperms 0775 "/${ANDROID_NDK_DIR}/"{,build,platforms,prebuilt}
+        fperms 0775 "/${ANDROID_NDK_DIR}/"{sources,toolchains}
 
         dodir "/${ANDROID_NDK_DIR}/out"
         fowners root:android "/${ANDROID_NDK_DIR}/out"
@@ -71,4 +72,3 @@ src_install() {
         insinto "/etc/revdep-rebuild"
         doins "${T}/80${PN}"
 }
-
